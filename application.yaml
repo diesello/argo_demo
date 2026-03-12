@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: openshift-gitops
   source:
     repoURL: https://github.com/diesello/argo_demo
     targetRevision: HEAD
