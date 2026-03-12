@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nginx
     app.kubernetes.io/instance: nginx-application
-  name: nginx-route-test
+  name: nginx-route
   namespace: nginx
   labels:
     app: nginx
