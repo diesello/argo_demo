@@ -21,3 +21,11 @@ spec:
     automated:
       selfHeal: true
       prune: true
+
+  ignoreDifferences:
+    - group: route.openshift.io
+      kind: Route
+      jsonPointers:
+        - /spec/host
+        - /status
+        - /metadata/annotations/openshift.io~1host.generated
