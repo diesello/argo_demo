@@ -2,22 +2,28 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-application
-  namespace: openshift-gitops
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-
   source:
-    repoURL: https://github.com/diesello/argo_demo.git
+    repoURL: https://github.com/diesello/argo_demo
     targetRevision: HEAD
-    path: nginx
-  destination: 
+    path: .
+  destination:
     server: https://kubernetes.default.svc
     namespace: nginx
-
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-
     automated:
-      selfHeal: true
-      prune: true
+      prune: true 
+      selfHeal: true  
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: route.openshift.io
+      kind: Route
+      jsonPointers:
+        - /spec/host
+        - /status
+        - /metadata/annotations/openshift.io~1host.generated
