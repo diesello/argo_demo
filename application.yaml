@@ -3,6 +3,7 @@ kind: Application
 metadata:
   name: nginx-application
   namespace: openshift-gitops
+
 spec:
   project: default
 
@@ -10,6 +11,7 @@ spec:
     repoURL: https://github.com/diesello/argo_demo.git
     targetRevision: HEAD
     path: nginx
+    
   destination: 
     server: https://kubernetes.default.svc
     namespace: nginx
@@ -21,11 +23,3 @@ spec:
     automated:
       selfHeal: true
       prune: true
-
-  ignoreDifferences:
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-        - /spec/host
-        - /status
-        - /metadata/annotations/openshift.io~1host.generated
