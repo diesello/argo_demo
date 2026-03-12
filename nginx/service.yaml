@@ -5,7 +5,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
   labels:
     app: nginx
-    app.kubernetes.io/instance: nginx-application
   name: nginx-lab
   namespace: nginx
 spec:
