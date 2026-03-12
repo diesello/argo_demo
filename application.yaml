@@ -3,27 +3,21 @@ kind: Application
 metadata:
   name: nginx-application
   namespace: openshift-gitops
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
+
   source:
-    repoURL: https://github.com/diesello/argo_demo
+    repoURL: https://github.com/diesello/argo_demo.git
     targetRevision: HEAD
-    path: .
-  destination:
+    path: nginx
+  destination: 
     server: https://kubernetes.default.svc
     namespace: nginx
+
   syncPolicy:
-    automated:
-      prune: true     
-      selfHeal: true  
     syncOptions:
-      - CreateNamespace=true
-  ignoreDifferences:
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-        - /spec/host
-        - /status
-        - /metadata/annotations/openshift.io~1host.generated
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
