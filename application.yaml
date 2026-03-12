@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: nginx-application
-  namespace: argocd
+  namespace: openshift-gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: openshift-gitops
+  project: default
   source:
     repoURL: https://github.com/diesello/argo_demo
     targetRevision: HEAD
@@ -16,7 +16,7 @@ spec:
     namespace: nginx
   syncPolicy:
     automated:
-      prune: true 
+      prune: true     
       selfHeal: true  
     syncOptions:
       - CreateNamespace=true
