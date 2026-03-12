@@ -3,6 +3,8 @@ kind: Route
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
+  labels:
+    app.kubernetes.io/instance: nginx-application
   name: nginx-route
   namespace: nginx
   labels:
