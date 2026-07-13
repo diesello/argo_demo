@@ -1,21 +1,23 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: nginx-presync-test
+  generateName: nginx-presync-fail-
   namespace: nginx
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: HookFailed
     argocd.argoproj.io/sync-wave: "-1"
 spec:
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
-        - name: test
-          image: registry.access.redhat.com/ubi9/ubi-minimal
+        - name: fail
+          image: registry.access.redhat.com/ubi9/ubi-minimal:latest
           command:
             - /bin/sh
             - -c
-            - echo "PreSync hook completed"
-  backoffLimit: 1
+            - |
+              echo "Intentional PreSync failure for ArgoCDSyncAlert testing"
+              exit 1
