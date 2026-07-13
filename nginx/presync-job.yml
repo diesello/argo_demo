@@ -5,7 +5,7 @@ metadata:
   namespace: nginx
   annotations:
     argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/hook-delete-policy: HookFailed
+    #argocd.argoproj.io/hook-delete-policy: HookFailed
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   backoffLimit: 0
