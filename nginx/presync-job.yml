@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx-presync-test
+  namespace: nginx
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: test
+          image: registry.access.redhat.com/ubi9/ubi-minimal
+          command:
+            - /bin/sh
+            - -c
+            - echo "PreSync hook completed"
+  backoffLimit: 1
