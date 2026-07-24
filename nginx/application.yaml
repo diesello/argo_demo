@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/diesello/argo_demo.git
     targetRevision: HEAD
-    path: nginx
+    path: nginx/manifests
     
   destination: 
     server: https://kubernetes.default.svc
