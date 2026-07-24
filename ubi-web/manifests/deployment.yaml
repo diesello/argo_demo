@@ -29,7 +29,7 @@ spec:
 
           volumeMounts:
             - name: web-content
-              mountPath: /opt/app-root/src/index.html
+              mountPath: /var/www/html/index.html
               subPath: index.html
               readOnly: true
 
