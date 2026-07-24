@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ubi-web
+  labels:
+    app: ubi-web
+spec:
+  to:
+    kind: Service
+    name: ubi-web
+    weight: 100
+
+  port:
+    targetPort: http
+
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

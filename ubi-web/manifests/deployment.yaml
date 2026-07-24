@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubi-web
+  labels:
+    app: ubi-web
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: ubi-web
+
+  template:
+    metadata:
+      labels:
+        app: ubi-web
+
+    spec:
+      containers:
+        - name: httpd
+          image: registry.access.redhat.com/ubi9/httpd-24:latest
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          volumeMounts:
+            - name: web-content
+              mountPath: /opt/app-root/src/index.html
+              subPath: index.html
+              readOnly: true
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+      volumes:
+        - name: web-content
+          configMap:
+            name: ubi-web-content

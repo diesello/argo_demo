@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ubi-web
+  namespace: openshift-gitops
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/diesello/argo_demo.git
+    targetRevision: main
+    path: ubi-web/manifests
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ubi-web
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
